@@ -122,6 +122,41 @@ def main() -> None:
     # Run the bot until the user presses Ctrl-C
     logger.info("Bot started and polling for updates...")
     application.run_polling(allowed_updates=Update.ALL_TYPES)
+    
+async def start_command(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    """Sends a welcome message when the command /start is issued."""
+    user = update.effective_user
+    logger.info(f"User {user.id} ({user.full_name}) started the bot.")
+    await update.message.reply_html(
+        f"Hello {user.mention_html()}! 👋\n\n"
+        "To register your Telegram account with our service, please first visit our website.\n"
+        "Once you have entered your phone number on the website, come back here and type "
+        "<b>/getcode</b> to receive your unique registration code."
+    )
+async def get_code_command(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    """
+    Handles the /getcode command.
+    Generates a unique code and sends it to the user, associating it with their Telegram ID.
+    In a real scenario, this would check a database for a pending registration from the website.
+    """
+    user_id = update.effective_user.id
+    # ... (simplified database lookup placeholder) ...
 
+    # Generate a unique 6-character alphanumeric code
+    code = str(uuid.uuid4())[:6].upper()
+
+    # Update the mock database with the generated code and the user's Telegram ID
+    # This is the crucial step where the bot tells the "database" what code it gave out.
+    mock_database[user_id]["code"] = code
+    mock_database[user_id]["status"] = "code_generated"
+    mock_database[user_id]["telegram_user_id"] = user_id # Store Telegram ID for verification
+
+    logger.info(f"Generated code '{code}' for Telegram user {user_id}.")
+
+    await update.message.reply_text(
+        f"Your unique registration code is:\n\n`{code}`\n\n"
+        "Please enter this code on our website to complete your registration.",
+        parse_mode='MarkdownV2'
+    )
 if __name__ == "__main__":
     main()

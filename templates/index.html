@@ -1,9 +1,26 @@
-{% extends 'base.html' %}
-
-{% block title %}Welcome to Telegram Registration{% endblock %}
-
-{% block content %}
-    <div class="text-center">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Telegram Registration{% endblock %}</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Optional: Custom font for better aesthetics */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+    </style>
+    <!-- Alpine.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+</head>
+<body class="bg-gradient-to-br from-blue-100 via-purple-100 to-pink-100 min-h-screen flex items-center justify-center p-4">
+    <div class="bg-white p-8 rounded-xl shadow-2xl w-full max-w-md mx-auto border border-gray-200">
+        <!-- Main content block to be overridden by child templates -->
+        {% block content %}{% endblock %}
+        <div class="text-center">
         <!-- Telegram Icon SVG for better aesthetics -->
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512" class="w-16 h-16 mx-auto mb-6 text-blue-500">
             <!--! Font Awesome Pro 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2024 Fonticons, Inc. -->
@@ -18,4 +35,6 @@
             Start Registration
         </a>
     </div>
-{% endblock %}
+    </div>
+</body>
+</html>
